@@ -162,8 +162,144 @@ class Test(unittest.TestCase):
             print(len(allCommentAfter))
             self.assertTrue(countBefore + 1 == countAfter)
             self.assertFalse(countBefore + 1!= countAfter)
-    
-            
+    def testCommentDDT(self):
+        login_button_xpath = "//*[@id='region-main']/div/div[2]/div/div/div/div[2]/div/div/div[1]/a"
+        software_testing_course_link_xpath = "/html/body/div[2]/div[3]/div/div/section[1]/div/aside/section/div/div/div[1]/div/div/div/div[1]/div/ul/ul[1]/li[8]/div/div/div/a"
+        forumXpath = "/html/body/div[1]/div[3]/div/div/section/div/div/ul/li[3]/div[3]/ul/li[11]/div/div/div[2]/div/a/span"
+        firstPost = "/html/body/div[2]/div[3]/div/div/section/div[2]/div/table/tbody/tr[1]/th/div/a"
+        comment =       "/html/body/div[1]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div/div[2]/div[2]/div/a[2]"
+        postComment =    "/html/body/div[2]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div[2]/div/form/div[2]/button[1]/span[1]"
+        chromedriver_autoinstaller.install()
+        with webdriver.Chrome() as driver:
+            username=""
+            password=""
+            with open("credential_file.txt","r") as f: 
+                username = f.readline().strip()
+                password = f.readline().strip()
+            print(f"username is: {username}|{password}")
+            wait = WebDriverWait(driver, 10)
+            driver.get("http://e-learning.hcmut.edu.vn/login/")
+            driver.find_element(By.XPATH, login_button_xpath).click()
+            # fill in credentials
+            driver.find_element(By.ID, "username").send_keys(username)
+            driver.find_element(By.ID, "password").send_keys(password)
+            # Click Login Button 
+            driver.find_element(By.NAME,"submit").click()
+            #WebDriverWait(driver, 100)
+            # fault for exception
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "closebutton"))).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, software_testing_course_link_xpath))
+            driver.find_element(By.XPATH, software_testing_course_link_xpath).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, forumXpath))
+            driver.find_element(By.XPATH, forumXpath).click()
+            driver.find_element(By.XPATH, firstPost).click()  #click to a post  
+            driver.find_element(By.XPATH, comment).click()   #click to comment
+            time.sleep(3)
+            #driver.find_element(By.XPATH, inputComment).click()\
+            post = driver.find_element(By.CLASS_NAME, 'indent')
+            allCommentBefore = post.find_elements(By.TAG_NAME, 'article')
+            countBefore = len(allCommentBefore)
+            print(countBefore)
+            driver.find_element(By.NAME, 'post').send_keys(data[0])
+            driver.find_element(By.XPATH, postComment).click()
+            time.sleep(5)
+            allCommentAfter = post.find_elements(By.TAG_NAME, 'article')
+            countAfter = len(allCommentAfter)
+            print(len(allCommentAfter))
+            self.assertTrue(countBefore + 1 == countAfter)
+            self.assertFalse(countBefore + 1!= countAfter)
+    def testCommentDDT1(self):
+        login_button_xpath = "//*[@id='region-main']/div/div[2]/div/div/div/div[2]/div/div/div[1]/a"
+        software_testing_course_link_xpath = "/html/body/div[2]/div[3]/div/div/section[1]/div/aside/section/div/div/div[1]/div/div/div/div[1]/div/ul/ul[1]/li[8]/div/div/div/a"
+        forumXpath = "/html/body/div[1]/div[3]/div/div/section/div/div/ul/li[3]/div[3]/ul/li[11]/div/div/div[2]/div/a/span"
+        firstPost = "/html/body/div[2]/div[3]/div/div/section/div[2]/div/table/tbody/tr[1]/th/div/a"
+        comment =       "/html/body/div[1]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div/div[2]/div[2]/div/a[2]"
+        postComment =    "/html/body/div[2]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div[2]/div/form/div[2]/button[1]/span[1]"
+        chromedriver_autoinstaller.install()
+        with webdriver.Chrome() as driver:
+            username=""
+            password=""
+            with open("credential_file.txt","r") as f: 
+                username = f.readline().strip()
+                password = f.readline().strip()
+            print(f"username is: {username}|{password}")
+            wait = WebDriverWait(driver, 10)
+            driver.get("http://e-learning.hcmut.edu.vn/login/")
+            driver.find_element(By.XPATH, login_button_xpath).click()
+            # fill in credentials
+            driver.find_element(By.ID, "username").send_keys(username)
+            driver.find_element(By.ID, "password").send_keys(password)
+            # Click Login Button 
+            driver.find_element(By.NAME,"submit").click()
+            #WebDriverWait(driver, 100)
+            # fault for exception
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "closebutton"))).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, software_testing_course_link_xpath))
+            driver.find_element(By.XPATH, software_testing_course_link_xpath).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, forumXpath))
+            driver.find_element(By.XPATH, forumXpath).click()
+            driver.find_element(By.XPATH, firstPost).click()  #click to a post  
+            driver.find_element(By.XPATH, comment).click()   #click to comment
+            time.sleep(3)
+            #driver.find_element(By.XPATH, inputComment).click()\
+            post = driver.find_element(By.CLASS_NAME, 'indent')
+            allCommentBefore = post.find_elements(By.TAG_NAME, 'article')
+            countBefore = len(allCommentBefore)
+            print(countBefore)
+            driver.find_element(By.NAME, 'post').send_keys(data[1])
+            driver.find_element(By.XPATH, postComment).click()
+            time.sleep(5)
+            allCommentAfter = post.find_elements(By.TAG_NAME, 'article')
+            countAfter = len(allCommentAfter)
+            print(len(allCommentAfter))
+            self.assertTrue(countBefore + 1 == countAfter)
+            self.assertFalse(countBefore + 1!= countAfter)
+    def testCommentDDT2(self):
+        login_button_xpath = "//*[@id='region-main']/div/div[2]/div/div/div/div[2]/div/div/div[1]/a"
+        software_testing_course_link_xpath = "/html/body/div[2]/div[3]/div/div/section[1]/div/aside/section/div/div/div[1]/div/div/div/div[1]/div/ul/ul[1]/li[8]/div/div/div/a"
+        forumXpath = "/html/body/div[1]/div[3]/div/div/section/div/div/ul/li[3]/div[3]/ul/li[11]/div/div/div[2]/div/a/span"
+        firstPost = "/html/body/div[2]/div[3]/div/div/section/div[2]/div/table/tbody/tr[1]/th/div/a"
+        comment =       "/html/body/div[1]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div/div[2]/div[2]/div/a[2]"
+        postComment =    "/html/body/div[2]/div[3]/div/div/section/div[1]/div/article/div[1]/div/div[2]/div/form/div[2]/button[1]/span[1]"
+        chromedriver_autoinstaller.install()
+        with webdriver.Chrome() as driver:
+            username=""
+            password=""
+            with open("credential_file.txt","r") as f: 
+                username = f.readline().strip()
+                password = f.readline().strip()
+            print(f"username is: {username}|{password}")
+            wait = WebDriverWait(driver, 10)
+            driver.get("http://e-learning.hcmut.edu.vn/login/")
+            driver.find_element(By.XPATH, login_button_xpath).click()
+            # fill in credentials
+            driver.find_element(By.ID, "username").send_keys(username)
+            driver.find_element(By.ID, "password").send_keys(password)
+            # Click Login Button 
+            driver.find_element(By.NAME,"submit").click()
+            #WebDriverWait(driver, 100)
+            # fault for exception
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "closebutton"))).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, software_testing_course_link_xpath))
+            driver.find_element(By.XPATH, software_testing_course_link_xpath).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, forumXpath))
+            driver.find_element(By.XPATH, forumXpath).click()
+            driver.find_element(By.XPATH, firstPost).click()  #click to a post  
+            driver.find_element(By.XPATH, comment).click()   #click to comment
+            time.sleep(3)
+            #driver.find_element(By.XPATH, inputComment).click()\
+            post = driver.find_element(By.CLASS_NAME, 'indent')
+            allCommentBefore = post.find_elements(By.TAG_NAME, 'article')
+            countBefore = len(allCommentBefore)
+            print(countBefore)
+            driver.find_element(By.NAME, 'post').send_keys(data[2])
+            driver.find_element(By.XPATH, postComment).click()
+            time.sleep(5)
+            allCommentAfter = post.find_elements(By.TAG_NAME, 'article')
+            countAfter = len(allCommentAfter)
+            print(len(allCommentAfter))
+            self.assertTrue(countBefore + 1 == countAfter)
+            self.assertFalse(countBefore + 1!= countAfter)
     def testFollow(self):
         login_button_xpath = "//*[@id='region-main']/div/div[2]/div/div/div/div[2]/div/div/div[1]/a"
         software_testing_course_link_xpath = "/html/body/div[2]/div[3]/div/div/section[1]/div/aside/section/div/div/div[1]/div/div/div/div[1]/div/ul/ul[1]/li[8]/div/div/div/a"
@@ -279,8 +415,35 @@ class Test(unittest.TestCase):
             nameAfter = driver.find_element(By.XPATH, nameAfterXpath).text
             self.assertTrue(nameOfBookmark == nameAfter)
             self.assertFalse(nameOfBookmark != nameAfter)
-
-
-
+    def testSort(self):
+        login_button_xpath = "//*[@id='region-main']/div/div[2]/div/div/div/div[2]/div/div/div[1]/a"
+        software_testing_course_link_xpath = "/html/body/div[2]/div[3]/div/div/section[1]/div/aside/section/div/div/div[1]/div/div/div/div[1]/div/ul/ul[1]/li[8]/div/div/div/a"
+        forumXpath = "/html/body/div[1]/div[3]/div/div/section/div/div/ul/li[3]/div[3]/ul/li[11]/div/div/div[2]/div/a/span"
+        chromedriver_autoinstaller.install()
+        with webdriver.Chrome() as driver:
+            username=""
+            password=""
+            with open("credential_file.txt","r") as f: 
+                username = f.readline().strip()
+                password = f.readline().strip()
+            wait = WebDriverWait(driver, 10)
+            driver.get("http://e-learning.hcmut.edu.vn/login/")
+            driver.find_element(By.XPATH, login_button_xpath).click()
+            # fill in credentials
+            driver.find_element(By.ID, "username").send_keys(username)
+            driver.find_element(By.ID, "password").send_keys(password)
+            # Click Login Button 
+            driver.find_element(By.NAME,"submit").click()
+            # fault for exception
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "closebutton"))).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, software_testing_course_link_xpath))
+            driver.find_element(By.XPATH, software_testing_course_link_xpath).click()
+            WebDriverWait(driver,timeout=5).until(lambda d: d.find_element(By.XPATH, forumXpath))
+            driver.find_element(By.XPATH, forumXpath).click()
+            time.sleep(2)
+            driver.find_element(By.NAME, 'group').click()
+            selectGroup = "/html/body/div[2]/div[3]/div/div/section/div[2]/div/div[1]/div/form/select/optgroup[1]/option[1]"
+            driver.find_element(By.XPATH, selectGroup).click()
+            self.assertTrue(True)
 if __name__ == '__main__':
     unittest.main()
